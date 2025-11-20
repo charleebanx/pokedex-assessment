@@ -2,10 +2,13 @@ import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
 
 export interface Pokemon {
-  id: string;
+  id: number;
   name: string;
-  types?: string[];
-  sprite?: string;
+  types: string[];
+  sprite: string;
+  height?: number;
+  weight?: number;
+  stats?: string[];
 }
 
 export interface PokemonDetail extends Pokemon {
@@ -76,26 +79,31 @@ export const GET_POKEMON_DETAILS = gql`
 `;
 
 // Search should be done client-side for the mid-level assessment. Uncomment for the senior assessment.
-export const useGetPokemons = (/* search?: string */): {
-  data: Pokemon[];
-  loading: boolean;
-  error: useQuery.Result['error'];
-} => {
+export const useGetPokemons = () => {
   const { data, loading, error } = useQuery<{ pokemon: any[] }>(GET_POKEMONS, {
     variables: {
-      search: '', // `.*${search}.*`,
+      search: '',
     },
   });
 
+  const formattedData: Pokemon[] =
+    data?.pokemon?.map((p) => ({
+      id: p.id,
+      name: p.pokemonspecy?.pokemonspeciesnames?.[0]?.name ?? 'Unknown',
+      // modified the return to fetch data that will be presented through list item & modal
+      sprite: p.pokemonsprites?.[0]?.sprites ?? '',
+      weight: p.weight,
+      height: p.height,
+      stats: p.pokemonstats?.map((s: any) => s.stat.name) ?? [],
+      types:
+        p.pokemontypes?.map((t: any) => t.type.typenames?.[0]?.name ?? '') ??
+        [],
+    })) ?? [];
+
   return {
-    data:
-      data?.pokemon?.map(
-        (p): Pokemon => ({
-          id: p.id,
-          name: p.pokemonspecy.pokemonspeciesnames?.[0]?.name,
-        }),
-      ) ?? [],
+    data: formattedData,
     loading,
-    error,
+    error: error ?? null,
   };
 };
+
