@@ -1,17 +1,1 @@
-Pokedex ReacPokedex React/TypeScript App - Summary
-
-This app uses a Pokémon GraphQL API to list and explore Pokémon.
-
-Key Features:
-
-List Page: Shows Pokémon name, number, types, and image with hover effects. Handles loading, error, and empty states.
-
-Search: Filters Pokémon client-side (case-insensitive). Shows no-results messaging.
-
-Detail Modal: Click a Pokémon to see detailed info via a route-based modal. Handles loading and errors.
-
-Tech: React, TypeScript, JSS (tss), Apollo Client, React Router.
-
-Testing: Includes Jest + React Testing Library tests; all must pass.
-
-Submission: Ensure app runs without errors and tests pass.
+A Pokedex app built with React and TypeScript that lists Pokémon, supports search, and shows details in a modal.
