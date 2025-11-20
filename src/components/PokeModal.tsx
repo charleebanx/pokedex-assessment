@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client/react';
 import { Dialog, DialogContent, DialogTitle, IconButton, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { tss } from '../tss';
-import { GET_POKEMONS_DETAILS } from 'src/hooks/useGetPokemons';
+import { GET_POKEMON_DETAILS } from 'src/hooks/useGetPokemons';
 
 /*
 PokeModal focuses on: 
@@ -17,7 +17,7 @@ interface PokeModalProps {
 
 const PokeModal = ({ pokemonId, onClose }: PokeModalProps) => {
   const { classes } = useStyles();
-  const { data, loading, error } = useQuery(GET_POKEMONS_DETAILS, {
+  const { data, loading, error } = useQuery(GET_POKEMON_DETAILS, {
     variables: { id: pokemonId },
   });
 
